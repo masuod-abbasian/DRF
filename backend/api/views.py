@@ -34,20 +34,29 @@ from api.permissions import IsSuperUser , IsAuthorOrReadOnly , IsStaffOrReadOnly
 #     permission_classes = (IsStaffOrReadOnly,IsAuthorOrReadOnly)
 
 class ArticleViewSet(ModelViewSet):
-    # queryset = Article.objects.all()
+    queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    filterset_fields = ['status', 'author__username']
+    ordering_fields = ['publish','status']
+    ordering = ['-publish']
+    search_fields = [
+        'title',
+        'content',
+        'author__username',
+        'author__first_name',
+        'author__last_name',
+    ]
+    # def get_queryset(self):
+    #     queryset = Article.objects.all()
+    #     status = self.request.query_params.get('status')
+    #     if status is not None:
+    #         queryset = queryset.filter(status=status)
 
-    def get_queryset(self):
-        queryset = Article.objects.all()
-        status = self.request.query_params.get('status')
-        if status is not None:
-            queryset = queryset.filter(status=status)
-
-        author = self.request.query_params.get('author')
-        if author is not None:
-            queryset = queryset.filter(author__username=author)
+    #     author = self.request.query_params.get('author')
+    #     if author is not None:
+    #         queryset = queryset.filter(author__username=author)
             
-        return queryset
+    #     return queryset
 
     def get_permissions(self):
         if self.action in ['list','create']:
