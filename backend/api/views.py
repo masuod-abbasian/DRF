@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from blog.models import Article
-from api.serializers import ArticleSerializer, UserSerializer, AuthorSerializer
+from api.serializers import ArticleSerializer, UserSerializer #, AuthorSerializer
 # from rest_framework.generics import ListCreateAPIView,RetrieveAPIView,RetrieveDestroyAPIView,RetrieveUpdateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
@@ -87,9 +87,9 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (IsSuperuserOrStaffReadOnly,)
 
-class AuthorRetrieve(RetrieveAPIView):
-    queryset = get_user_model().objects.filter(is_staff=True)
-    serializer_class = AuthorSerializer
+# class AuthorRetrieve(RetrieveAPIView):
+#     queryset = get_user_model().objects.filter(is_staff=True)
+#     serializer_class = AuthorSerializer
 
 '''
 class RevokeToken(APIView):
